@@ -1,0 +1,10 @@
+.friendCard {
+  position: absolute;
+
+  &:hover {
+    cursor: grab;
+  }
+
+  .cardHeader {
+  }
+}
