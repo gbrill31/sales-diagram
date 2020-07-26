@@ -5,7 +5,7 @@ import Friend from './Friend/Friend';
 import './SalesFriendsLayout.scss';
 
 interface Layout {
-  data: any;
+  data: object[];
 }
 
 const SalesFriendsLayout = ({ data }: Layout) => {
