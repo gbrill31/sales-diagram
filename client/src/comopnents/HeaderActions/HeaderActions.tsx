@@ -5,6 +5,7 @@ import { Button } from 'reactstrap';
 import './HeaderActions.scss';
 
 import { setNewFriendDialog, setFriendToAttach } from '../../actions';
+import { exportToCsv } from '../../api';
 
 const HeaderActions = () => {
   const dispatch = useDispatch();
@@ -25,10 +26,10 @@ const HeaderActions = () => {
         className="spacingRight"
         onClick={openNewFriendDialog}
       >
-        Add A Friend
+        Add A Root Friend
       </Button>
-      <Button className="spacingRight" color="info">
-        Export information
+      <Button className="spacingRight" color="info" onClick={exportToCsv}>
+        Export Tree
       </Button>
       <h4>Bring A Friend Tree</h4>
     </div>
