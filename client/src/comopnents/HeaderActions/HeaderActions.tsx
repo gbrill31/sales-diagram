@@ -63,8 +63,6 @@ const HeaderActions = () => {
     dispatch(setNewFriendDialog(true));
   }, [dispatch, clearAttachId]);
 
-  console.log(getCsvData(items));
-
   return (
     <div className="wrapper">
       <Button

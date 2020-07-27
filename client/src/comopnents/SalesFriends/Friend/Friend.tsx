@@ -74,7 +74,10 @@ const Friend = ({ _id, x, y, name, totalSales, children }: Friends) => {
   const getTotalEarnedFromFriends = (friendChildren: object[]): number => {
     let total = 0;
     friendChildren?.forEach(
-      (child: any) => (total += child.totalSales * TICKET_PRICE * 0.2)
+      (child: any) =>
+        (total +=
+          child.totalSales * TICKET_PRICE * 0.2 +
+          getTotalEarnedFromFriends(child.children) * 0.2)
     );
     return total;
   };
