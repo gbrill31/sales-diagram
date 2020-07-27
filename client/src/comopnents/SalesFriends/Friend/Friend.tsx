@@ -33,7 +33,7 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
   const offset = useRef<any>();
 
   const nestedFriends = children?.map((friend) => {
-    Object.assign(friend, { level: level += 1 });
+    Object.assign(friend, { level: level + 1 });
     return <Friend key={friend._id} {...friend} />;
   });
 
