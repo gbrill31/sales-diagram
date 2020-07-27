@@ -57,7 +57,7 @@ export default function ConnectingLine({ sourceX, sourceY, targetId }: Lines) {
             y1={sourceY}
             x2={targetPos.x}
             y2={targetPos.y}
-            style={{ stroke: 'white', strokeWidth: '2' }}
+            style={{ stroke: 'white', strokeWidth: '3' }}
           ></line>
         </svg>
       </div>

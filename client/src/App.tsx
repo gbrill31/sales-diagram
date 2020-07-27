@@ -2,6 +2,7 @@ import React from 'react';
 
 import HeaderActions from './comopnents/HeaderActions/HeaderActions';
 import SalesFriendsLayout from './comopnents/SalesFriends/SalesFriendsLayout';
+import PlaceFriendArea from './comopnents/PlaceFriendArea/PlaceFriendArea';
 
 import './App.scss';
 
@@ -34,7 +35,16 @@ const salesData = [
             y: 155,
             name: 'Chicko2',
             totalSales: 200,
-            children: [],
+            children: [
+              {
+                id: 22,
+                x: 155,
+                y: 255,
+                name: 'Mister',
+                totalSales: 200,
+                children: [],
+              },
+            ],
           },
         ],
       },
@@ -42,17 +52,18 @@ const salesData = [
   },
 ];
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <header>
         <HeaderActions />
       </header>
       <main>
-        <SalesFriendsLayout data={salesData} />
+        <SalesFriendsLayout />
       </main>
+      <PlaceFriendArea />
     </div>
   );
-}
+};
 
 export default App;

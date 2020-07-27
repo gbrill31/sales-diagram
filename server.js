@@ -7,6 +7,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+require('dotenv').config();
+
 app.use(logger('dev'));
 
 app.use(bodyParser.json());
@@ -14,34 +16,16 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 
 const configDB = require('./app/mongo/config');
 //
-console.log(
-  `===== Connecting to: ${configDB[process.env.NODE_ENV || 'development'].url}`
-);
+console.log(`===== Connecting to: ${process.env.MONGO_DB_NAME}`);
 // mongoose.set('debug', true);
 mongoose.Promise = Promise;
-mongoose.connect(
-  configDB[process.env.NODE_ENV || 'development'].url,
-  configDB.options
+mongoose.connect(configDB.url, configDB.options, () =>
+  console.log('Connected to db')
 );
-require('./app/config/passport')(passport); // pass passport for configuration
-
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-require('./app/config/middleware')(app);
-
-app.post('/report-violation', (req, res) => {
-  if (req.body) {
-    console.log('CSP Violation: ', req.body);
-  } else {
-    console.log('CSP Violation: No data received!');
-  }
-
-  res.status(204).end();
-});
+// require('./app/config/middleware')(app);
 
 // app.use((req, res, next) => {
 //   // Website you wish to allow to connect
@@ -57,10 +41,7 @@ app.post('/report-violation', (req, res) => {
 //   next();
 // });
 
-app.use('/', require('./app/routes/authRoutes')(app, passport));
-app.use('/api', require('./app/routes/apiRoutes')(passport));
-app.use('/api/user', require('./app/routes/userRoutes'));
-app.use('/api/project', require('./app/routes/projectApiRoutes'));
+app.use('/friends', require('./app/routes/friendsRoutes'));
 app.use('/', require('./app/routes/routes'));
 
 // catch 404 and forward to error handler
