@@ -20,7 +20,8 @@
     "react-scripts": "3.4.1",
     "reactstrap": "^8.5.1",
     "redux-saga": "^1.1.3",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "@types/reactstrap": "^8.5.0"
   },
   "scripts": {
     "start": "react-scripts start --no-cache",
@@ -44,7 +45,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@types/reactstrap": "^8.5.0"
-  }
+  "devDependencies": {}
 }
