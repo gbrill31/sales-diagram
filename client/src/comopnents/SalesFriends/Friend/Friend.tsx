@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Card, Button, CardHeader, CardBody, CardTitle } from 'reactstrap';
+import { Card, Button, CardHeader, CardBody, CardText } from 'reactstrap';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ConnectingLine from '../ConnectingLine/ConnectingLine';
 
@@ -15,12 +17,13 @@ interface Friends {
   y: number;
   name: string;
   totalSales: number;
+  level: number;
   children: Friends[];
 }
 
 const TICKET_PRICE = 100;
 
-const Friend = ({ _id, x, y, name, totalSales, children }: Friends) => {
+const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
   const dispatch = useDispatch();
 
   const [position, setPosition] = useState({ x, y });
@@ -30,6 +33,7 @@ const Friend = ({ _id, x, y, name, totalSales, children }: Friends) => {
   const offset = useRef<any>();
 
   const nestedFriends = children?.map((friend) => {
+    Object.assign(friend, { level: level += 1 });
     return <Friend key={friend._id} {...friend} />;
   });
 
@@ -82,6 +86,11 @@ const Friend = ({ _id, x, y, name, totalSales, children }: Friends) => {
     return total;
   };
 
+  const getRandomColor = () => {
+    if (level % 2 === 0) return `rgb(${150}, ${0}, ${255 / level})`;
+    return `rgb(${255 / level}, ${0}, ${150})`;
+  };
+
   useEffect(() => {
     if (isMoveCard) {
       window.addEventListener('mousemove', setCardPosition);
@@ -111,6 +120,7 @@ const Friend = ({ _id, x, y, name, totalSales, children }: Friends) => {
               sourceX={centerPosition.x}
               sourceY={centerPosition.y}
               targetId={nested.props._id}
+              color={getRandomColor()}
             />
           );
         })}
@@ -123,19 +133,23 @@ const Friend = ({ _id, x, y, name, totalSales, children }: Friends) => {
         onMouseUp={disableMoveCard}
       >
         <Card>
-          <CardHeader className="cardHeader">{name}</CardHeader>
+          <CardHeader className="cardHeader">
+            {name}
+            <Button onClick={openNewFriendDialog}>
+              <FontAwesomeIcon icon={faPlus} size="sm" />
+            </Button>
+          </CardHeader>
           <CardBody>
-            <CardTitle>{`Total sales: ${totalSales}`}</CardTitle>
-            <CardTitle>{`Total earned from sales: ${
+            <CardText className="cardText">{`Total sales: ${totalSales}`}</CardText>
+            <CardText className="cardText">{`Total earned from sales: ${
               totalSales * TICKET_PRICE
-            }`}</CardTitle>
-            <CardTitle>{`Total earned from friends: ${getTotalEarnedFromFriends(
+            }`}</CardText>
+            <CardText className="cardText">{`Total earned from friends: ${getTotalEarnedFromFriends(
               children
-            )}`}</CardTitle>
-            <CardTitle>{`Total earned from sales + friends: ${
+            )}`}</CardText>
+            <CardText className="cardText">{`Total earned from sales + friends: ${
               totalSales * TICKET_PRICE + getTotalEarnedFromFriends(children)
-            }`}</CardTitle>
-            <Button onClick={openNewFriendDialog}>Add new friend</Button>
+            }`}</CardText>
           </CardBody>
         </Card>
       </div>
@@ -144,4 +158,4 @@ const Friend = ({ _id, x, y, name, totalSales, children }: Friends) => {
   );
 };
 
-export default Friend;
+export default React.memo(Friend);

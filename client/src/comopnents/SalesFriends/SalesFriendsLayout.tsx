@@ -24,7 +24,9 @@ const SalesFriendsLayout = () => {
   return (
     <div className="layoutWrapper">
       {friends &&
-        friends.map((item: any) => <Friend key={item._id} {...item} />)}
+        friends.map((item: any) => (
+          <Friend key={item._id} level={1} {...item} />
+        ))}
     </div>
   );
 };

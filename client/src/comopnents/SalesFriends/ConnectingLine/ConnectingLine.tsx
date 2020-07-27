@@ -6,9 +6,9 @@ interface Lines {
   sourceX: number;
   sourceY: number;
   targetId: number;
+  color: string;
 }
-
-export default function ConnectingLine({ sourceX, sourceY, targetId }: Lines) {
+const ConnectingLine = ({ sourceX, sourceY, targetId, color }: Lines) => {
   const [targetPos, setTatrgetPos] = useState({ x: 0, y: 0 });
   const lastSourcePos = useRef({ x: sourceX, y: sourceY });
 
@@ -58,11 +58,13 @@ export default function ConnectingLine({ sourceX, sourceY, targetId }: Lines) {
               y1={sourceY}
               x2={targetPos.x}
               y2={targetPos.y}
-              style={{ stroke: 'white', strokeWidth: '3' }}
+              style={{ stroke: color, strokeWidth: '3' }}
             ></line>
           </svg>
         </div>
       )}
     </>
   );
-}
+};
+
+export default React.memo(ConnectingLine);
