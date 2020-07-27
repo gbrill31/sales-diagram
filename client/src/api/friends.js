@@ -13,8 +13,3 @@ export async function saveNewFriend(friend) {
   const { data } = await axios.post(`${baseURL}/friends/save`, { friend });
   return data;
 }
-
-export async function exportToCsv() {
-  const { data } = await axios.get(`${baseURL}/friends/export`);
-  return data;
-}

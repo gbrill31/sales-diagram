@@ -1,3 +1,3 @@
-import { getAll, saveNewFriend, exportToCsv } from './friends';
+import { getAll, saveNewFriend } from './friends';
 
-export { getAll, saveNewFriend, exportToCsv };
+export { getAll, saveNewFriend };
