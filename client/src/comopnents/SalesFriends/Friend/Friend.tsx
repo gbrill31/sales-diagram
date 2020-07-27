@@ -59,11 +59,12 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
   const setCardPosition = (e: any) => {
     const { offsetX, offsetY } = offset.current;
     const layoutElement: any = document.querySelector('.layoutWrapper');
-    const containerBoundries = layoutElement.getBoundingClientRect();
+    const layoutBoundries = layoutElement.getBoundingClientRect();
     const cardElementBoundries = cardRef.current.getBoundingClientRect();
-    if (containerBoundries) {
+    if (layoutBoundries) {
       const x = e.clientX + offsetX;
       const y = e.clientY + offsetY;
+
       setPosition({
         x,
         y,
