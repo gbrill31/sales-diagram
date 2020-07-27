@@ -36,7 +36,7 @@ const getCsvData = (friends) => {
 
 router.get('/', (req, res) => {
   Friend.find({ isChild: false })
-    .populate('children')
+    .exec()
     .then(
       (friends) => {
         res.status(200).json(friends);
@@ -45,40 +45,40 @@ router.get('/', (req, res) => {
     );
 });
 
-router.post('/savenew', (req, res) => {
+router.post('/save', (req, res) => {
   const { friend } = req.body;
   if (friend.attachId) {
-    Friend.findOne({ _id: friend.attachId }).then(
-      (dbFriend) => {
-        if (dbFriend) {
-          delete friend.attachId;
-          friend.isChild = true;
-          saveNewFriend(friend).then(
-            (savedFriend) => {
-              dbFriend.children = [...dbFriend.children, savedFriend];
-              dbFriend.save((err, savedFriend) => {
-                if (err) {
-                  return res.status(403).json(err);
-                }
-                Friend.populate(
-                  savedFriend,
-                  { path: 'children' },
-                  (err, fr) => {
-                    if (err) {
-                      res.status(403).json(err);
-                    } else {
-                      res.status(200).json(fr);
-                    }
+    Friend.findOne({ _id: friend.attachId })
+      .exec()
+      .then(
+        (dbFriend) => {
+          if (dbFriend) {
+            delete friend.attachId;
+            friend.isChild = true;
+            saveNewFriend(friend).then(
+              (savedFriend) => {
+                dbFriend.children = [...dbFriend.children, savedFriend];
+                dbFriend.save((err, savedFriend) => {
+                  if (err) {
+                    return res.status(403).json(err);
                   }
-                );
-              });
-            },
-            (err) => res.status(403).json(err)
-          );
-        }
-      },
-      (err) => res.status(403).json(err)
-    );
+                  Friend.find({ isChild: false })
+                    .exec()
+                    .then(
+                      (friends) => {
+                        res.status(200).json(friends);
+                      },
+                      (err) => res.status(403).json(err)
+                    );
+                  // res.status(200).json(savedFriend);
+                });
+              },
+              (err) => res.status(403).json(err)
+            );
+          }
+        },
+        (err) => res.status(403).json(err)
+      );
   } else {
     saveNewFriend(friend).then(
       (savedFriend) => {

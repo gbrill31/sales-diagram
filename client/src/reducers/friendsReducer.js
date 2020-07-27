@@ -49,10 +49,9 @@ const friendsReducer = (state = INITIAL_STATE, action = {}) => {
         setNewFriendPending: false,
         setNewFriendError: null,
         isNewFriendDialog: false,
-        items: [
-          ...state.items.filter((friend) => friend._id !== action.payload._id),
-          action.payload,
-        ],
+        items: Array.isArray(action.payload)
+          ? [...action.payload]
+          : [...state.items, action.payload],
       };
     case FRIENDS.ON_SAVE_NEW_FRIEND_FAILED:
       return {

@@ -90,6 +90,7 @@ const PlaceFriendArea = () => {
                 </Label>
                 <Col sm="10">
                   <Input
+                    autoFocus
                     type="text"
                     name="name"
                     value={name}

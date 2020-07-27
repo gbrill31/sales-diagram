@@ -17,4 +17,11 @@ const friendSchema = mongoose.Schema(
   }
 );
 
+function autoPopulateSubs(next) {
+  this.populate('children');
+  next();
+}
+
+friendSchema.pre('findOne', autoPopulateSubs).pre('find', autoPopulateSubs);
+
 module.exports = mongoose.model('Friend', friendSchema);
