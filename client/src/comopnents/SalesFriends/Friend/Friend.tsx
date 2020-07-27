@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Card, Button, CardHeader, CardBody, CardTitle } from 'reactstrap';
 
@@ -6,8 +7,10 @@ import ConnectingLine from '../ConnectingLine/ConnectingLine';
 
 import './Friend.scss';
 
+import { setNewFriendDialog, setFriendToAttach } from '../../../actions';
+
 interface Friends {
-  id: number;
+  _id: number | string;
   x: number;
   y: number;
   name: string;
@@ -17,16 +20,28 @@ interface Friends {
 
 const TICKET_PRICE = 100;
 
-const Friend = ({ id, x, y, name, totalSales, children }: Friends) => {
+const Friend = ({ _id, x, y, name, totalSales, children }: Friends) => {
+  const dispatch = useDispatch();
+
   const [position, setPosition] = useState({ x, y });
   const [centerPosition, setCenterPosition] = useState({ x, y });
   const [isMoveCard, setIsMoveCard] = useState(false);
   const cardRef = useRef<any>();
   const offset = useRef<any>();
 
-  const nestedFriends = children.map((friend) => {
-    return <Friend key={friend.id} {...friend} />;
+  const nestedFriends = children?.map((friend) => {
+    return <Friend key={friend._id} {...friend} />;
   });
+
+  const setAttachId = useCallback(() => dispatch(setFriendToAttach(_id)), [
+    dispatch,
+    _id,
+  ]);
+
+  const openNewFriendDialog = useCallback(() => {
+    setAttachId();
+    dispatch(setNewFriendDialog(true));
+  }, [dispatch, setAttachId]);
 
   const enableMoveCard = (e: any) => {
     offset.current = {
@@ -58,7 +73,7 @@ const Friend = ({ id, x, y, name, totalSales, children }: Friends) => {
 
   const getTotalEarnedFromFriends = (friendChildren: object[]): number => {
     let total = 0;
-    friendChildren.forEach(
+    friendChildren?.forEach(
       (child: any) => (total += child.totalSales * TICKET_PRICE * 0.2)
     );
     return total;
@@ -85,20 +100,20 @@ const Friend = ({ id, x, y, name, totalSales, children }: Friends) => {
 
   return (
     <>
-      {nestedFriends.length > 0 &&
+      {nestedFriends?.length > 0 &&
         nestedFriends.map((nested: any) => {
           return (
             <ConnectingLine
-              key={`l-${nested.props.id}`}
+              key={`l-${nested.props._id}`}
               sourceX={centerPosition.x}
               sourceY={centerPosition.y}
-              targetId={nested.props.id}
+              targetId={nested.props._id}
             />
           );
         })}
       <div
         className="friendCard"
-        id={`friend${id}`}
+        id={`friend${_id}`}
         ref={cardRef}
         style={{ left: `${position.x}px`, top: `${position.y}px` }}
         onMouseDown={enableMoveCard}
@@ -117,7 +132,7 @@ const Friend = ({ id, x, y, name, totalSales, children }: Friends) => {
             <CardTitle>{`Total earned from sales + friends: ${
               totalSales * TICKET_PRICE + getTotalEarnedFromFriends(children)
             }`}</CardTitle>
-            <Button>Go somewhere</Button>
+            <Button onClick={openNewFriendDialog}>Add new friend</Button>
           </CardBody>
         </Card>
       </div>

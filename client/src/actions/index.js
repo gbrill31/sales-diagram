@@ -5,6 +5,7 @@ import {
   setNewFriend,
   setNewFriendError,
   setNewFriendDialog,
+  setFriendToAttach,
   setAllFriendsError,
 } from './friendsActions';
 
@@ -15,5 +16,6 @@ export {
   setNewFriend,
   setNewFriendError,
   setNewFriendDialog,
+  setFriendToAttach,
   setAllFriendsError,
 };

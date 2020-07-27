@@ -13,7 +13,10 @@ const PlaceFriendArea = () => {
   const [name, setName] = useState('');
   const [sales, setSales] = useState(0);
 
-  const { isNewFriendDialog } = useSelector((state: any) => state.friends);
+  const { isNewFriendDialog, friendAttachId } = useSelector(
+    (state: any) => state.friends
+  );
+
   const screenCoordinates = useRef({ x: 0, y: 0 });
 
   const closeNewFriendDialog = useCallback(
@@ -44,6 +47,7 @@ const PlaceFriendArea = () => {
   const handleSaveFriend = () => {
     const { x, y } = screenCoordinates.current;
     saveFriend({
+      attachId: friendAttachId,
       x,
       y,
       name,

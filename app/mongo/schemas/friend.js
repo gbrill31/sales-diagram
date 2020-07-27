@@ -6,6 +6,7 @@ const friendSchema = mongoose.Schema(
     x: Number,
     y: Number,
     totalSales: Number,
+    isChild: { type: Boolean, default: false },
     children: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friend' }],
   },
   {

@@ -3,6 +3,7 @@ import { FRIENDS } from '../consts';
 
 const INITIAL_STATE = {
   items: null,
+  friendAttachId: null,
   getAllPending: false,
   getAllError: null,
   isNewFriendDialog: false,
@@ -32,6 +33,11 @@ const friendsReducer = (state = INITIAL_STATE, action = {}) => {
         ...state,
         isNewFriendDialog: action.payload,
       };
+    case FRIENDS.ON_SET_FRIEND_TO_ATTACH:
+      return {
+        ...state,
+        friendAttachId: action.payload,
+      };
     case FRIENDS.ON_SAVE_NEW_FRIEND:
       return {
         ...state,
@@ -43,7 +49,10 @@ const friendsReducer = (state = INITIAL_STATE, action = {}) => {
         setNewFriendPending: false,
         setNewFriendError: null,
         isNewFriendDialog: false,
-        items: [...state.items, action.payload],
+        items: [
+          ...state.items.filter((friend) => friend._id !== action.payload._id),
+          action.payload,
+        ],
       };
     case FRIENDS.ON_SAVE_NEW_FRIEND_FAILED:
       return {

@@ -29,3 +29,8 @@ export const setNewFriendDialog = (isOpen) => ({
   type: FRIENDS.ON_SET_NEW_FRIEND_DIALOG,
   payload: isOpen,
 });
+
+export const setFriendToAttach = (id) => ({
+  type: FRIENDS.ON_SET_FRIEND_TO_ATTACH,
+  payload: id,
+});

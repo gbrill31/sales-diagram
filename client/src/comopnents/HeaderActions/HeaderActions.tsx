@@ -4,15 +4,20 @@ import { Button } from 'reactstrap';
 
 import './HeaderActions.scss';
 
-import { setNewFriendDialog } from '../../actions';
+import { setNewFriendDialog, setFriendToAttach } from '../../actions';
 
 const HeaderActions = () => {
   const dispatch = useDispatch();
 
-  const openNewFriendDialog = useCallback(
-    () => dispatch(setNewFriendDialog(true)),
-    [dispatch]
-  );
+  const clearAttachId = useCallback(() => dispatch(setFriendToAttach(null)), [
+    dispatch,
+  ]);
+
+  const openNewFriendDialog = useCallback(() => {
+    clearAttachId();
+    dispatch(setNewFriendDialog(true));
+  }, [dispatch, clearAttachId]);
+
   return (
     <div className="wrapper">
       <Button
