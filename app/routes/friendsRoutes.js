@@ -37,7 +37,17 @@ router.post('/savenew', (req, res) => {
                 if (err) {
                   return res.status(403).json(err);
                 }
-                res.status(200).json(savedFriend);
+                Friend.populate(
+                  savedFriend,
+                  { path: 'children' },
+                  (err, fr) => {
+                    if (err) {
+                      res.status(403).json(err);
+                    } else {
+                      res.status(200).json(fr);
+                    }
+                  }
+                );
               });
             },
             (err) => res.status(403).json(err)

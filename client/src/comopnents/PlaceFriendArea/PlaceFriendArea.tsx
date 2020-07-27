@@ -65,6 +65,8 @@ const PlaceFriendArea = () => {
   useEffect(() => {
     if (!isNewFriendDialog && isFormOpen) {
       setIsFormOpen(false);
+      setName('');
+      setSales(0);
     }
   }, [isNewFriendDialog, isFormOpen]);
 

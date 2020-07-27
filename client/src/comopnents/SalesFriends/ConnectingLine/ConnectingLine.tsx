@@ -50,17 +50,19 @@ export default function ConnectingLine({ sourceX, sourceY, targetId }: Lines) {
 
   return (
     <>
-      <div id={`line${targetId}`}>
-        <svg className="line">
-          <line
-            x1={sourceX}
-            y1={sourceY}
-            x2={targetPos.x}
-            y2={targetPos.y}
-            style={{ stroke: 'white', strokeWidth: '3' }}
-          ></line>
-        </svg>
-      </div>
+      {targetId && (
+        <div id={`line${targetId}`}>
+          <svg className="line">
+            <line
+              x1={sourceX}
+              y1={sourceY}
+              x2={targetPos.x}
+              y2={targetPos.y}
+              style={{ stroke: 'white', strokeWidth: '3' }}
+            ></line>
+          </svg>
+        </div>
+      )}
     </>
   );
 }

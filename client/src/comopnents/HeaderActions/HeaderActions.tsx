@@ -27,7 +27,10 @@ const HeaderActions = () => {
       >
         Add A Friend
       </Button>
-      <Button color="info">Export information</Button>
+      <Button className="spacingRight" color="info">
+        Export information
+      </Button>
+      <h4>Bring A Friend Tree</h4>
     </div>
   );
 };
