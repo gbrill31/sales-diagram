@@ -62,7 +62,9 @@ const getCsvData = (friends: any): any => {
 const HeaderActions = () => {
   const dispatch = useDispatch();
 
-  const { items } = useSelector((state: any) => state.friends);
+  const { items, getAllPending, getAllError } = useSelector(
+    (state: any) => state.friends
+  );
 
   const clearAttachId = useCallback(() => dispatch(setFriendToAttach(null)), [
     dispatch,
@@ -73,7 +75,7 @@ const HeaderActions = () => {
     dispatch(setNewFriendDialog(true));
   }, [dispatch, clearAttachId]);
 
-  return (
+  return !getAllPending && !getAllError ? (
     <div className="wrapper">
       <Button
         color="primary"
@@ -89,7 +91,7 @@ const HeaderActions = () => {
       </CSVLink>
       <h4>Bring A Friend Tree</h4>
     </div>
-  );
+  ) : null;
 };
 
 export default HeaderActions;

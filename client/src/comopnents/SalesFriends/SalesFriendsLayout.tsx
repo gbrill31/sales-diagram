@@ -23,7 +23,6 @@ const SalesFriendsLayout = () => {
       requestAllFriends();
     }
   }, [friends, requestAllFriends]);
-  console.log(getAllError);
 
   return (
     <>
