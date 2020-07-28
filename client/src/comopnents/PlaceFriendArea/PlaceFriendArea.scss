@@ -6,13 +6,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px solid #28a745;
 
   .placeBg {
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: #000;
-    opacity: 0.2;
+    opacity: 0.5;
   }
 
   .placeCloseBtn {

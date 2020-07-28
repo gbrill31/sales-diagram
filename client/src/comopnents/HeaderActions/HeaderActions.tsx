@@ -84,7 +84,7 @@ const HeaderActions = () => {
       </Button>
       <CSVLink data={getCsvData(items)} headers={fields} filename="salesData">
         <Button className="spacingRight" color="info">
-          Export Tree
+          Export Diagram Data
         </Button>
       </CSVLink>
       <h4>Bring A Friend Tree</h4>
