@@ -66,12 +66,6 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
     return total;
   };
 
-  const getLevelColor = () => {
-    if (level % 2 === 0) return `rgb(${150}, ${0}, ${255})`;
-    if (level % 3 === 0) return `rgb(${55}, ${0}, ${150})`;
-    return `rgb(${155}, ${0}, ${50})`;
-  };
-
   const saveNewPosition = (e: any, data: any) => {
     const newPosObj = {
       x: data.x,
@@ -102,7 +96,7 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
               sourceX={centerPosition.x}
               sourceY={centerPosition.y}
               targetId={nested.props._id}
-              color={getLevelColor()}
+              level={level}
             />
           );
         })}

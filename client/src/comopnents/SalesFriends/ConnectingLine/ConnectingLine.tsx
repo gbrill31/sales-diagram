@@ -6,9 +6,9 @@ interface Lines {
   sourceX: number;
   sourceY: number;
   targetId: number;
-  color: string;
+  level: number;
 }
-const ConnectingLine = ({ sourceX, sourceY, targetId, color }: Lines) => {
+const ConnectingLine = ({ sourceX, sourceY, targetId, level }: Lines) => {
   const [targetPos, setTatrgetPos] = useState({ x: 0, y: 0 });
   const lastSourcePos = useRef({ x: sourceX, y: sourceY });
 
@@ -22,12 +22,20 @@ const ConnectingLine = ({ sourceX, sourceY, targetId, color }: Lines) => {
       const targetElementBoundries = targetElement.getBoundingClientRect();
       setTatrgetPos({
         x: targetElementBoundries.left + targetElementBoundries.width / 2,
-        y: targetElementBoundries.top + targetElementBoundries.height / 2,
+        y: targetElementBoundries.top + targetElementBoundries.height / 4,
       });
     }
   }, [sourceX, sourceY, targetId, setTatrgetPos]);
 
+  const getLevelColor = () => {
+    if (level % 2 === 0) return `rgb(${150}, ${0}, ${0})`;
+    if (level % 3 === 0) return `rgb(${0}, ${0}, ${150})`;
+    if (level % 5 === 0) return `rgb(${0}, ${50}, ${150})`;
+    return `rgb(${0}, ${150}, ${0})`;
+  };
+
   useEffect(() => {
+    // console.log('calc line');
     calcLine();
   }, [sourceX, sourceY, calcLine]);
 
@@ -58,7 +66,7 @@ const ConnectingLine = ({ sourceX, sourceY, targetId, color }: Lines) => {
               y1={sourceY}
               x2={targetPos.x}
               y2={targetPos.y}
-              style={{ stroke: color, strokeWidth: '3' }}
+              style={{ stroke: getLevelColor(), strokeWidth: '3' }}
             ></line>
           </svg>
         </div>
