@@ -91,7 +91,7 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
       <Draggable
         nodeRef={cardRef}
         defaultPosition={{ x, y }}
-        bounds="body"
+        bounds="parent"
         scale={1}
         onDrag={setCardPosition}
         onStop={saveNewPosition}
