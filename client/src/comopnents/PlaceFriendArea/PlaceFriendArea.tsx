@@ -1,7 +1,15 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, FormGroup, Form, Input, Label, Col } from 'reactstrap';
+import {
+  Button,
+  FormGroup,
+  Form,
+  Input,
+  Label,
+  Col,
+  Spinner,
+} from 'reactstrap';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -15,9 +23,12 @@ const PlaceFriendArea = () => {
   const [name, setName] = useState('');
   const [sales, setSales] = useState(0);
 
-  const { isNewFriendDialog, friendAttachId } = useSelector(
-    (state: any) => state.friends
-  );
+  const {
+    isNewFriendDialog,
+    friendAttachId,
+    setNewFriendPending,
+    setNewFriendError,
+  } = useSelector((state: any) => state.friends);
 
   const screenCoordinates = useRef({ x: 0, y: 0 });
 
@@ -110,7 +121,7 @@ const PlaceFriendArea = () => {
               </FormGroup>
               <FormGroup row>
                 <Label for="sales" sm={2}>
-                  Email
+                  Sold
                 </Label>
                 <Col sm="10">
                   <Input
@@ -124,6 +135,11 @@ const PlaceFriendArea = () => {
                   />
                 </Col>
               </FormGroup>
+              {setNewFriendError && (
+                <p className="saveError">
+                  Something went wrong, unable to save
+                </p>
+              )}
               <FormGroup className="formActions" row>
                 <Button
                   color="primary"
@@ -131,7 +147,11 @@ const PlaceFriendArea = () => {
                   onClick={handleSaveFriend}
                   disabled={!isSaveAllowed()}
                 >
-                  Save
+                  {setNewFriendPending ? (
+                    <Spinner color="light" size="sm" />
+                  ) : (
+                    'Save'
+                  )}
                 </Button>
                 <Button color="secondary" onClick={closeForm}>
                   Change Position

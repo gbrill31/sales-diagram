@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Draggable from 'react-draggable';
 
 import { Card, Button, CardHeader, CardBody, CardText } from 'reactstrap';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import ConnectingLine from '../ConnectingLine/ConnectingLine';
@@ -11,6 +11,7 @@ import ConnectingLine from '../ConnectingLine/ConnectingLine';
 import './Friend.scss';
 
 import { setNewFriendDialog, setFriendToAttach } from '../../../actions';
+import { updateFriendPos } from '../../../api';
 
 interface Friends {
   _id: number | string;
@@ -65,9 +66,19 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
     return total;
   };
 
-  const getRandomColor = () => {
-    if (level % 2 === 0) return `rgb(${150}, ${0}, ${255 / level})`;
-    return `rgb(${255 / level}, ${0}, ${150})`;
+  const getLevelColor = () => {
+    if (level % 2 === 0) return `rgb(${150}, ${0}, ${255})`;
+    if (level % 3 === 0) return `rgb(${55}, ${0}, ${150})`;
+    return `rgb(${155}, ${0}, ${50})`;
+  };
+
+  const saveNewPosition = (e: any, data: any) => {
+    const newPosObj = {
+      x: data.x,
+      y: data.y,
+      id: _id,
+    };
+    updateFriendPos(newPosObj);
   };
 
   useEffect(() => {
@@ -91,7 +102,7 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
               sourceX={centerPosition.x}
               sourceY={centerPosition.y}
               targetId={nested.props._id}
-              color={getRandomColor()}
+              color={getLevelColor()}
             />
           );
         })}
@@ -101,13 +112,14 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
         bounds="parent"
         scale={1}
         onDrag={setCardPosition}
+        onStop={saveNewPosition}
       >
         <div className="friendCard" id={`friend${_id}`} ref={cardRef}>
           <Card>
             <CardHeader className="cardHeader">
               {name}
               <Button onClick={openNewFriendDialog}>
-                <FontAwesomeIcon icon={faPlus} size="sm" />
+                <FontAwesomeIcon icon={faUserPlus} size="sm" />
               </Button>
             </CardHeader>
             <CardBody>

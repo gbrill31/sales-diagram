@@ -13,3 +13,8 @@ export async function saveNewFriend(friend) {
   const { data } = await axios.post(`${baseURL}/friends/save`, { friend });
   return data;
 }
+
+export async function updateFriendPos(friend) {
+  const { data } = await axios.post(`${baseURL}/friends/updatepos`, { friend });
+  return data;
+}

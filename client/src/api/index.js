@@ -1,3 +1,3 @@
-import { getAll, saveNewFriend } from './friends';
+import { getAll, saveNewFriend, updateFriendPos } from './friends';
 
-export { getAll, saveNewFriend };
+export { getAll, saveNewFriend, updateFriendPos };
