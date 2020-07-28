@@ -2,6 +2,8 @@ import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, FormGroup, Form, Input, Label, Col } from 'reactstrap';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './PlaceFriendArea.scss';
 
@@ -62,6 +64,8 @@ const PlaceFriendArea = () => {
     setSales(e.target.value);
   };
 
+  const isSaveAllowed = () => name.length > 0;
+
   useEffect(() => {
     if (!isNewFriendDialog && isFormOpen) {
       setIsFormOpen(false);
@@ -75,8 +79,12 @@ const PlaceFriendArea = () => {
       <>
         <div className="placeWrapper">
           <div className="placeBg" onClick={openNewFriendForm}></div>
-          <h1 className="header">Click anywhere to place your new friend</h1>
-          <Button className="placeCloseBtn" onClick={closePlacer} close />
+          {!isFormOpen && (
+            <h1 className="header">Click anywhere to place a new friend</h1>
+          )}
+          <Button className="placeCloseBtn" close onClick={closePlacer}>
+            <FontAwesomeIcon icon={faTimes} />
+          </Button>
         </div>
         {isFormOpen && (
           <div className="friendForm">
@@ -121,11 +129,12 @@ const PlaceFriendArea = () => {
                   color="primary"
                   className="rightSpace"
                   onClick={handleSaveFriend}
+                  disabled={!isSaveAllowed()}
                 >
                   Save
                 </Button>
                 <Button color="secondary" onClick={closeForm}>
-                  Cancel
+                  Change Position
                 </Button>
               </FormGroup>
             </Form>

@@ -65,13 +65,17 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
       const x = e.clientX + offsetX;
       const y = e.clientY + offsetY;
 
-      setPosition({
-        x,
-        y,
-      });
+      // const calcPosX = e.clientX - offsetX - cardElementBoundries.width / 2;
+      // const calcPosY = e.clientY - offsetY - cardElementBoundries.height / 2;
+      // console.log(calcPosX, calcPosY);
+
       setCenterPosition({
         x: x + cardElementBoundries.width / 2,
         y: y + cardElementBoundries.height / 2,
+      });
+      setPosition({
+        x,
+        y,
       });
     }
   };

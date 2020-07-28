@@ -29,20 +29,30 @@ const fields = [
     label: 'Total From Earnings and Friends',
   },
 ];
+const TICKET_PRICE = 100;
+
+const getTotalEarnedFromFriends = (friendChildren: object[]): number => {
+  let total = 0;
+  friendChildren?.forEach(
+    (child: any) =>
+      (total +=
+        child.totalSales * TICKET_PRICE * 0.2 +
+        getTotalEarnedFromFriends(child.children) * 0.2)
+  );
+  return total;
+};
 
 const getCsvData = (friends: any): any => {
   let data: any = [];
   friends?.forEach((friend: any) => {
-    let totalEarningsFriends = 0;
-    friend.children.forEach(
-      (child: any) => (totalEarningsFriends += child.totalSales * 100)
-    );
     const csvObj = {
       name: friend.name,
       totalSales: friend.totalSales,
-      totalEarnings: friend.totalSales * 100,
-      totalEarningsFriends: totalEarningsFriends * 0.2,
-      totalOverall: totalEarningsFriends * 0.2 + friend.totalSales * 100,
+      totalEarnings: friend.totalSales * TICKET_PRICE,
+      totalEarningsFriends: getTotalEarnedFromFriends(friend.children),
+      totalOverall:
+        getTotalEarnedFromFriends(friend.children) +
+        friend.totalSales * TICKET_PRICE,
     };
     data = [...data, csvObj, ...getCsvData(friend.children)];
   });
