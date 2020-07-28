@@ -12,6 +12,7 @@ import './Friend.scss';
 
 import { setNewFriendDialog, setFriendToAttach } from '../../../actions';
 import { updateFriendPos } from '../../../api';
+import { TICKET_PRICE, getTotalEarnedFromFriends } from '../../../utils';
 
 interface Friends {
   _id: number | string;
@@ -22,8 +23,6 @@ interface Friends {
   level: number;
   children: Friends[];
 }
-
-const TICKET_PRICE = 100;
 
 const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
   const dispatch = useDispatch();
@@ -55,17 +54,6 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
     });
   };
 
-  const getTotalEarnedFromFriends = (friendChildren: object[]): number => {
-    let total = 0;
-    friendChildren?.forEach(
-      (child: any) =>
-        (total +=
-          child.totalSales * TICKET_PRICE * 0.2 +
-          getTotalEarnedFromFriends(child.children) * 0.2)
-    );
-    return total;
-  };
-
   const saveNewPosition = (e: any, data: any) => {
     const newPosObj = {
       x: data.x,
@@ -84,7 +72,7 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
         y: y + cardElementBoundries.height / 2,
       });
     }
-  }, [cardRef, x, y]);
+  }, [cardRef, x, y, _id]);
 
   return (
     <>
@@ -102,8 +90,8 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
         })}
       <Draggable
         nodeRef={cardRef}
-        defaultPosition={{ x: x, y: y }}
-        bounds="parent"
+        defaultPosition={{ x, y }}
+        bounds="body"
         scale={1}
         onDrag={setCardPosition}
         onStop={saveNewPosition}
@@ -116,7 +104,7 @@ const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
                 <FontAwesomeIcon icon={faUserPlus} size="sm" />
               </Button>
             </CardHeader>
-            <CardBody>
+            <CardBody className="cardBody">
               <CardText className="cardText">{`Total sales: ${totalSales}`}</CardText>
               <CardText className="cardText">{`Total earned from sales: ${
                 totalSales * TICKET_PRICE

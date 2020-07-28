@@ -22,7 +22,7 @@ const ConnectingLine = ({ sourceX, sourceY, targetId, level }: Lines) => {
       const targetElementBoundries = targetElement.getBoundingClientRect();
       setTatrgetPos({
         x: targetElementBoundries.left + targetElementBoundries.width / 2,
-        y: targetElementBoundries.top + targetElementBoundries.height / 4,
+        y: targetElementBoundries.top + targetElementBoundries.height / 8,
       });
     }
   }, [sourceX, sourceY, targetId, setTatrgetPos]);
@@ -30,7 +30,7 @@ const ConnectingLine = ({ sourceX, sourceY, targetId, level }: Lines) => {
   const getLevelColor = () => {
     if (level % 2 === 0) return `rgb(${150}, ${0}, ${0})`;
     if (level % 3 === 0) return `rgb(${0}, ${0}, ${150})`;
-    if (level % 5 === 0) return `rgb(${0}, ${50}, ${150})`;
+    if (level % 5 === 0) return `rgb(${50}, ${50}, ${150})`;
     return `rgb(${0}, ${150}, ${0})`;
   };
 

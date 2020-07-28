@@ -3,18 +3,18 @@ import axios from 'axios';
 const baseURL =
   process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '';
 
-export async function getAll() {
+export const getAll = async () => {
   const { data } = await axios.get(`${baseURL}/friends`);
   // console.log(data);
   return data;
-}
+};
 
-export async function saveNewFriend(friend) {
+export const saveNewFriend = async (friend) => {
   const { data } = await axios.post(`${baseURL}/friends/save`, { friend });
   return data;
-}
+};
 
-export async function updateFriendPos(friend) {
+export const updateFriendPos = async (friend) => {
   const { data } = await axios.post(`${baseURL}/friends/updatepos`, { friend });
   return data;
-}
+};

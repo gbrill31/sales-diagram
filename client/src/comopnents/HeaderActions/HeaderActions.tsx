@@ -6,58 +6,7 @@ import { CSVLink } from 'react-csv';
 import './HeaderActions.scss';
 
 import { setNewFriendDialog, setFriendToAttach } from '../../actions';
-
-const fields = [
-  {
-    key: 'name',
-    label: 'Name',
-  },
-  {
-    key: 'totalSales',
-    label: 'Total Sales',
-  },
-  {
-    key: 'totalEarnings',
-    label: 'Total Sales Earnings',
-  },
-  {
-    key: 'totalEarningsFriends',
-    label: 'Total From Friends',
-  },
-  {
-    key: 'totalOverall',
-    label: 'Total From Earnings and Friends',
-  },
-];
-const TICKET_PRICE = 100;
-
-const getTotalEarnedFromFriends = (friendChildren: object[]): number => {
-  let total = 0;
-  friendChildren?.forEach(
-    (child: any) =>
-      (total +=
-        child.totalSales * TICKET_PRICE * 0.2 +
-        getTotalEarnedFromFriends(child.children) * 0.2)
-  );
-  return total;
-};
-
-const getCsvData = (friends: any): any => {
-  let data: any = [];
-  friends?.forEach((friend: any) => {
-    const csvObj = {
-      name: friend.name,
-      totalSales: friend.totalSales,
-      totalEarnings: friend.totalSales * TICKET_PRICE,
-      totalEarningsFriends: getTotalEarnedFromFriends(friend.children),
-      totalOverall:
-        getTotalEarnedFromFriends(friend.children) +
-        friend.totalSales * TICKET_PRICE,
-    };
-    data = [...data, csvObj, ...getCsvData(friend.children)];
-  });
-  return data;
-};
+import { getCsvData, FIELDS } from '../../utils';
 
 const HeaderActions = () => {
   const dispatch = useDispatch();
@@ -75,7 +24,7 @@ const HeaderActions = () => {
     dispatch(setNewFriendDialog(true));
   }, [dispatch, clearAttachId]);
 
-  return !getAllPending && !getAllError ? (
+  return !getAllPending && !getAllError && items ? (
     <div className="wrapper">
       <Button
         color="primary"
@@ -84,7 +33,11 @@ const HeaderActions = () => {
       >
         Add A Root Friend
       </Button>
-      <CSVLink data={getCsvData(items)} headers={fields} filename="salesData">
+      <CSVLink
+        data={getCsvData(items) || []}
+        headers={FIELDS}
+        filename="salesData"
+      >
         <Button className="spacingRight" color="info">
           Export Diagram Data
         </Button>

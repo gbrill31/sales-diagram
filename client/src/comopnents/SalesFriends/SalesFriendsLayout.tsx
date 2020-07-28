@@ -10,6 +10,7 @@ import { getAllFriends } from '../../actions';
 
 const SalesFriendsLayout = () => {
   const dispatch = useDispatch();
+
   const { items: friends, getAllPending, getAllError } = useSelector(
     (state: any) => state.friends
   );
