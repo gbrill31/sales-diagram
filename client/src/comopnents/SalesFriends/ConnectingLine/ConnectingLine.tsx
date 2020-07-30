@@ -35,7 +35,6 @@ const ConnectingLine = ({ sourceX, sourceY, targetId, level }: Lines) => {
   };
 
   useEffect(() => {
-    // console.log('calc line');
     calcLine();
   }, [sourceX, sourceY, calcLine]);
 

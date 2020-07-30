@@ -24,9 +24,9 @@ const FIELDS = [
   },
 ];
 
-const getTotalEarnedFromFriends = (friendChildren) => {
+const getTotalEarnedFromFriends = (friends) => {
   let total = 0;
-  friendChildren.forEach(
+  friends.forEach(
     (child) =>
       (total +=
         child.totalSales * TICKET_PRICE * COMMISION_PERC +

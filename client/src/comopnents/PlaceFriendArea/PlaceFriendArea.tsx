@@ -105,7 +105,7 @@ const PlaceFriendArea = () => {
               </FormGroup>
               <FormGroup row>
                 <Label for="name" sm={2}>
-                  Email
+                  Name
                 </Label>
                 <Col sm="10">
                   <Input
