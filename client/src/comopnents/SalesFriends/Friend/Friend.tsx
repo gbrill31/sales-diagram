@@ -6,23 +6,18 @@ import { Card, Button, CardHeader, CardBody, CardText } from 'reactstrap';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { Friends } from '../../../interfaces';
+
 import ConnectingLine from '../ConnectingLine/ConnectingLine';
 
 import './Friend.scss';
 
 import { setNewFriendDialog, setFriendToAttach } from '../../../actions';
 import { updateFriendPos } from '../../../api';
-import { TICKET_PRICE, getTotalEarnedFromFriends } from '../../../utils';
-
-interface Friends {
-  _id: number | string;
-  x: number;
-  y: number;
-  name: string;
-  totalSales: number;
-  level: number;
-  children: Friends[];
-}
+import {
+  TICKET_PRICE,
+  getTotalEarnedFromFriends,
+} from '../../../utils/helpers';
 
 const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
   const dispatch = useDispatch();

@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
+import { Lines } from '../../../interfaces';
+
 import './ConnectingLine.scss';
 
-interface Lines {
-  sourceX: number;
-  sourceY: number;
-  targetId: number;
-  level: number;
-}
 const ConnectingLine = ({ sourceX, sourceY, targetId, level }: Lines) => {
   const [targetPos, setTatrgetPos] = useState({ x: 0, y: 0 });
   const lastSourcePos = useRef({ x: sourceX, y: sourceY });

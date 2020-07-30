@@ -1,3 +1,5 @@
+import { Friends } from '../interfaces';
+
 const TICKET_PRICE = 100;
 const COMMISION_PERC = 0.2;
 
@@ -24,10 +26,10 @@ const FIELDS = [
   },
 ];
 
-const getTotalEarnedFromFriends = (friends) => {
+const getTotalEarnedFromFriends = (friends: Friends[]): number => {
   let total = 0;
   friends.forEach(
-    (child) =>
+    (child: Friends) =>
       (total +=
         child.totalSales * TICKET_PRICE * COMMISION_PERC +
         getTotalEarnedFromFriends(child.children) * COMMISION_PERC)
@@ -35,8 +37,8 @@ const getTotalEarnedFromFriends = (friends) => {
   return total;
 };
 
-const getCsvData = (friends) => {
-  let data = [];
+const getCsvData = (friends: Friends[]): object[] => {
+  let data: any[] = [];
   friends.forEach((friend) => {
     const csvObj = {
       name: friend.name,
