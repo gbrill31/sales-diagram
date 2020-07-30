@@ -1,3 +1,3 @@
-import { Friends, Lines } from './interfaces';
+import { Friends, Lines, FriendsState, ActionTypes } from './interfaces';
 
-export { Friends, Lines };
+export { Friends, Lines, FriendsState, ActionTypes };

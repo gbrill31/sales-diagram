@@ -14,10 +14,7 @@ import './Friend.scss';
 
 import { setNewFriendDialog, setFriendToAttach } from '../../../actions';
 import { updateFriendPos } from '../../../api';
-import {
-  TICKET_PRICE,
-  getTotalEarnedFromFriends,
-} from '../../../utils/helpers';
+import { TICKET_PRICE, getTotalEarnedFromFriends } from '../../../utils';
 
 const Friend = ({ _id, x, y, name, totalSales, level, children }: Friends) => {
   const dispatch = useDispatch();

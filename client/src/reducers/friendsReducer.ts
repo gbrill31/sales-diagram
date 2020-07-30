@@ -1,7 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import { FRIENDS } from '../consts';
 
-const INITIAL_STATE = {
+import { FriendsState, ActionTypes } from '../interfaces';
+
+const INITIAL_STATE: FriendsState = {
   items: null,
   friendAttachId: null,
   getAllPending: false,
@@ -11,7 +13,7 @@ const INITIAL_STATE = {
   setNewFriendError: null,
 };
 
-const friendsReducer = (state = INITIAL_STATE, action = {}) => {
+const friendsReducer = (state = INITIAL_STATE, action: ActionTypes) => {
   switch (action.type) {
     case FRIENDS.ON_REQUEST_ALL:
       return { ...state, getAllPending: true };

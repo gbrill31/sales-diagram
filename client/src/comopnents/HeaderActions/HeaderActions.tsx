@@ -6,7 +6,7 @@ import { CSVLink } from 'react-csv';
 import './HeaderActions.scss';
 
 import { setNewFriendDialog, setFriendToAttach } from '../../actions';
-import { getCsvData, FIELDS } from '../../utils/helpers';
+import { getCsvData, FIELDS } from '../../utils';
 
 const HeaderActions = () => {
   const dispatch = useDispatch();
