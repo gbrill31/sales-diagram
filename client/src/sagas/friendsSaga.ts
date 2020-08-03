@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { FRIENDS } from '../consts';
+import { ON_REQUEST_ALL, ON_SAVE_NEW_FRIEND } from '../types/actions';
 import {
   setAllFriends,
   setAllFriendsError,
@@ -17,7 +17,7 @@ function* handleGetAllFriends() {
     yield put(setAllFriendsError(error));
   }
 }
-function* handleSaveFriend({ friend }) {
+function* handleSaveFriend({ friend }: any) {
   try {
     const newFriend = yield call(saveNewFriend, friend);
     yield put(setNewFriend(newFriend));
@@ -27,6 +27,6 @@ function* handleSaveFriend({ friend }) {
 }
 
 export default function* watchAuth() {
-  yield takeEvery(FRIENDS.ON_REQUEST_ALL, handleGetAllFriends);
-  yield takeEvery(FRIENDS.ON_SAVE_NEW_FRIEND, handleSaveFriend);
+  yield takeEvery(ON_REQUEST_ALL, handleGetAllFriends);
+  yield takeEvery(ON_SAVE_NEW_FRIEND, handleSaveFriend);
 }

@@ -1,7 +1,15 @@
-/* eslint-disable no-underscore-dangle */
-import { FRIENDS } from '../consts';
+import {
+  ON_REQUEST_ALL,
+  ON_REQUEST_ALL_SUCCESS,
+  ON_REQUEST_ALL_FAILED,
+  ON_SET_NEW_FRIEND_DIALOG,
+  ON_SET_FRIEND_TO_ATTACH,
+  ON_SAVE_NEW_FRIEND,
+  ON_SAVE_NEW_FRIEND_SUCCESS,
+  ON_SAVE_NEW_FRIEND_FAILED,
+} from '../types/actions';
 
-import { FriendsState, ActionTypes } from '../interfaces';
+import { FriendsState, FriendsActionTypes } from '../types';
 
 const INITIAL_STATE: FriendsState = {
   items: null,
@@ -13,53 +21,56 @@ const INITIAL_STATE: FriendsState = {
   setNewFriendError: null,
 };
 
-const friendsReducer = (state = INITIAL_STATE, action: ActionTypes) => {
+const friendsReducer = (
+  state = INITIAL_STATE,
+  action: FriendsActionTypes
+): FriendsState => {
   switch (action.type) {
-    case FRIENDS.ON_REQUEST_ALL:
+    case ON_REQUEST_ALL:
       return { ...state, getAllPending: true };
-    case FRIENDS.ON_REQUEST_ALL_SUCCESS:
+    case ON_REQUEST_ALL_SUCCESS:
       return {
         ...state,
-        items: action.payload,
+        items: action.friends,
         getAllPending: false,
         getAllError: null,
       };
-    case FRIENDS.ON_REQUEST_ALL_FAILED:
+    case ON_REQUEST_ALL_FAILED:
       return {
         ...state,
-        getAllError: action.payload,
+        getAllError: action.error,
         getAllPending: false,
       };
-    case FRIENDS.ON_SET_NEW_FRIEND_DIALOG:
+    case ON_SET_NEW_FRIEND_DIALOG:
       return {
         ...state,
-        isNewFriendDialog: action.payload,
+        isNewFriendDialog: action.isOpen,
       };
-    case FRIENDS.ON_SET_FRIEND_TO_ATTACH:
+    case ON_SET_FRIEND_TO_ATTACH:
       return {
         ...state,
-        friendAttachId: action.payload,
+        friendAttachId: action.id,
       };
-    case FRIENDS.ON_SAVE_NEW_FRIEND:
+    case ON_SAVE_NEW_FRIEND:
       return {
         ...state,
         setNewFriendPending: true,
       };
-    case FRIENDS.ON_SAVE_NEW_FRIEND_SUCCESS:
+    case ON_SAVE_NEW_FRIEND_SUCCESS:
       return {
         ...state,
         setNewFriendPending: false,
         setNewFriendError: null,
         isNewFriendDialog: false,
-        items: Array.isArray(action.payload)
-          ? [...action.payload]
-          : [...state.items, action.payload],
+        items: Array.isArray(action.friends)
+          ? [...action.friends]
+          : [...state.items, action.friends],
       };
-    case FRIENDS.ON_SAVE_NEW_FRIEND_FAILED:
+    case ON_SAVE_NEW_FRIEND_FAILED:
       return {
         ...state,
         setNewFriendPending: false,
-        setNewFriendError: action.payload,
+        setNewFriendError: action.error,
       };
     default:
       return state;

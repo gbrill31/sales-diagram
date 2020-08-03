@@ -17,7 +17,7 @@ import './PlaceFriendArea.scss';
 
 import { setNewFriendDialog, saveNewFriend } from '../../actions';
 
-const PlaceFriendArea = () => {
+const PlaceFriendArea: React.FC = () => {
   const dispatch = useDispatch();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [name, setName] = useState('');
@@ -41,12 +41,12 @@ const PlaceFriendArea = () => {
     dispatch,
   ]);
 
-  const closePlacer = (e: any) => {
+  const closePlacer = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     closeNewFriendDialog();
   };
 
-  const openNewFriendForm = (e: any) => {
+  const openNewFriendForm = (e: React.MouseEvent<HTMLDivElement>) => {
     screenCoordinates.current = {
       x: e.pageX,
       y: e.pageY,
@@ -68,11 +68,11 @@ const PlaceFriendArea = () => {
     });
   };
 
-  const handleNameChange = (e: any) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-  const handleSalesChange = (e: any) => {
-    setSales(e.target.value);
+  const handleSalesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSales(Number(e.target.value));
   };
 
   const isSaveAllowed = () => name.length > 0;

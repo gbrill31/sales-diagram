@@ -6,7 +6,7 @@ import { Card, Button, CardHeader, CardBody, CardText } from 'reactstrap';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { Friends } from '../../../interfaces';
+import { Friends } from '../../../types';
 
 import ConnectingLine from '../ConnectingLine/ConnectingLine';
 

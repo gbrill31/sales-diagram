@@ -5,6 +5,12 @@ import rootReducer from './reducers';
 
 import rootSaga from './sagas';
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__?: typeof Function;
+  }
+}
+
 const buildStore = () => {
   const sagaMiddleware = createSagaMiddleware();
   const isDev = process.env.NODE_ENV === 'development';
@@ -22,4 +28,4 @@ const buildStore = () => {
   return store;
 };
 
-export default buildStore;
+export const store = buildStore();

@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { Friends } from '../interfaces';
-
 const baseURL =
   process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : '';
 
@@ -11,7 +9,7 @@ export const getAll = async () => {
   return data;
 };
 
-export const saveNewFriend = async (friend: Friends) => {
+export const saveNewFriend = async (friend: object) => {
   const { data } = await axios.post(`${baseURL}/friends/save`, {
     friend,
   });

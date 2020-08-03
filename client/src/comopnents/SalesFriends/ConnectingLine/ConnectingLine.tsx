@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-import { Lines } from '../../../interfaces';
+import { Lines } from '../../../types';
 
 import './ConnectingLine.scss';
 
@@ -9,7 +9,9 @@ const ConnectingLine = ({ sourceX, sourceY, targetId, level }: Lines) => {
   const lastSourcePos = useRef({ x: sourceX, y: sourceY });
 
   const calcLine = useCallback((): void => {
-    const targetElement: any = document.querySelector(`#friend${targetId}`);
+    const targetElement: HTMLDivElement | null = document.querySelector(
+      `#friend${targetId}`
+    );
     lastSourcePos.current = {
       x: sourceX,
       y: sourceY,

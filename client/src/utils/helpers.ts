@@ -1,4 +1,4 @@
-import { Friends } from '../interfaces';
+import { Friends } from '../types';
 
 const TICKET_PRICE = 100;
 const COMMISION_PERC = 0.2;
